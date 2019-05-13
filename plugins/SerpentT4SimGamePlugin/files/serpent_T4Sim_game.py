@@ -30,7 +30,7 @@ class SerpentT4SimGame(Game, metaclass=Singleton):
         regions = {
             "USERNAME": (137, 53, 163, 210),
             "POSITIONS": (68, 171, 102, 478),
-            "PL": (133, 164, 172, 510),
+            "PL": (133, 166, 172, 508),
             "GAME_REGION": (262, 6, 591, 535),
             "WORKING_BUYS": (130, 50, 153, 84),
             "WORKING_SELLS": (130, 169, 154, 220),

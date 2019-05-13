@@ -54,7 +54,8 @@ class SerpentPPO:
         }
         
         saver_spec = {
-            "directory":os.path.join(os.getcwd(), "datasets", "t4simmodel"),
+            "directory":os.path.join(os.getcwd(), "datasets", "t4dowmodel"),
+#             "directory":os.path.join(os.getcwd(), "datasets", "t4dsimmodel"),
             "seconds": 120
         }
 #         memory_spec = {'type':'latest', 'include_next_states':False, 'capacity':1000*1000}

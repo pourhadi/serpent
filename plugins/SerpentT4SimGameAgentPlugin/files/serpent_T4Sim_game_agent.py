@@ -60,12 +60,13 @@ class SerpentT4SimGameAgent(GameAgent):
         }
         
         self.ppo_agent = SerpentPPO(
-            frame_shape=(164, 264, 1),
+            frame_shape=(164, 264, 4),
             game_inputs=game_inputs
         )
         
         try:
-            self.ppo_agent.agent.restore(directory=os.path.join(os.getcwd(), "datasets", "t4simmodel"))
+            self.ppo_agent.agent.restore(directory=os.path.join(os.getcwd(), "datasets", "t4dowmodel"))
+#             self.ppo_agent.agent.restore(directory=os.path.join(os.getcwd(), "datasets", "t4simmodel"))
         except Exception:
             pass
 #             
@@ -99,13 +100,18 @@ class SerpentT4SimGameAgent(GameAgent):
         self.ppo_agent.observe(reward, terminal=False)
 
         self.frame_buffer = game_frame        
-        self.frame_buffer = FrameGrabber.get_frames([0], frame_type="PIPELINE")
+        self.frame_buffer = FrameGrabber.get_frames([0, 1, 2, 3], frame_type="PIPELINE")
         self.frame_buffer = self.extract_game_area(self.frame_buffer)
         
         self.visual_debugger.store_image_data(
             self.frame_buffer[0],
             self.frame_buffer[0].shape,
-            4
+            2
+        )
+        self.visual_debugger.store_image_data(
+            self.frame_buffer[3],
+            self.frame_buffer[3].shape,
+            3
         )
         action, label, game_input = self.ppo_agent.generate_action(self.frame_buffer)
         print(label)
