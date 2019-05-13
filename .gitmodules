@@ -1,0 +1,6 @@
+[submodule "extra/tensorforce"]
+	path = extra/tensorforce
+	url = https://github.com/tensorforce/tensorforce
+[submodule "tf"]
+	path = tf
+	url = https://github.com/tensorforce/tensorforce

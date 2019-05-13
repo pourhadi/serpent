@@ -1,0 +1,139 @@
+{
+    "plugins": {
+        "SerpentT4SimGamePlugin": {
+            "name": "SerpentT4SimGamePlugin",
+            "version": "0.1.0",
+            "files": [
+                {
+                    "path": "serpent_T4Sim_game.py",
+                    "pluggable": "Game"
+                }
+            ],
+            "plugins": [],
+            "libraries": [],
+            "config": {
+                "fps": 2
+            }
+        },
+        "SerpentT4SimGameAgentPlugin": {
+            "name": "SerpentT4SimGameAgentPlugin",
+            "version": "0.1.0",
+            "files": [
+                {
+                    "path": "serpent_T4Sim_game_agent.py",
+                    "pluggable": "GameAgent"
+                }
+            ],
+            "plugins": [],
+            "libraries": [],
+            "config": {
+                "frame_handler": "PLAY"
+            }
+        },
+        "SerpentTradingViewSimGamePlugin": {
+            "name": "SerpentTradingViewSimGamePlugin",
+            "version": "0.1.0",
+            "files": [
+                {
+                    "path": "serpent_TradingViewSim_game.py",
+                    "pluggable": "Game"
+                }
+            ],
+            "plugins": [],
+            "libraries": [],
+            "config": {
+                "fps": 2
+            }
+        },
+        "SerpentTradingViewSimGameAgentGameAgentPlugin": {
+            "name": "SerpentTradingViewSimGameAgentGameAgentPlugin",
+            "version": "0.1.0",
+            "files": [
+                {
+                    "path": "serpent_TradingViewSimGameAgent_game_agent.py",
+                    "pluggable": "GameAgent"
+                }
+            ],
+            "plugins": [],
+            "libraries": [],
+            "config": {
+                "frame_handler": "PLAY"
+            }
+        },
+        "SerpentTradingViewSimGameAgentPlugin": {
+            "name": "SerpentTradingViewSimGameAgentPlugin",
+            "version": "0.1.0",
+            "files": [
+                {
+                    "path": "serpent_TradingViewSim_game_agent.py",
+                    "pluggable": "GameAgent"
+                }
+            ],
+            "plugins": [],
+            "libraries": [],
+            "config": {
+                "frame_handler": "PLAY"
+            }
+        },
+        "SerpentCQGDemoGamePlugin": {
+            "name": "SerpentCQGDemoGamePlugin",
+            "version": "0.1.0",
+            "files": [
+                {
+                    "path": "serpent_CQGDemo_game.py",
+                    "pluggable": "Game"
+                }
+            ],
+            "plugins": [],
+            "libraries": [],
+            "config": {
+                "fps": 2
+            }
+        },
+        "SerpentCQGDemoGameAgentPlugin": {
+            "name": "SerpentCQGDemoGameAgentPlugin",
+            "version": "0.1.0",
+            "files": [
+                {
+                    "path": "serpent_CQGDemo_game_agent.py",
+                    "pluggable": "GameAgent"
+                }
+            ],
+            "plugins": [],
+            "libraries": [],
+            "config": {
+                "frame_handler": "PLAY"
+            }
+        },
+        "SerpentT4AndroidGamePlugin": {
+            "name": "SerpentT4AndroidGamePlugin",
+            "version": "0.1.0",
+            "files": [
+                {
+                    "path": "serpent_T4Android_game.py",
+                    "pluggable": "Game"
+                }
+            ],
+            "plugins": [],
+            "libraries": [],
+            "config": {
+                "fps": 2
+            }
+        },
+        "SerpentT4AndroidGameAgentPlugin": {
+            "name": "SerpentT4AndroidGameAgentPlugin",
+            "version": "0.1.0",
+            "files": [
+                {
+                    "path": "serpent_T4Android_game_agent.py",
+                    "pluggable": "GameAgent"
+                }
+            ],
+            "plugins": [],
+            "libraries": [],
+            "config": {
+                "frame_handler": "PLAY"
+            }
+        }
+    }
+}

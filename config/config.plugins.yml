@@ -1,0 +1,18 @@
+SerpentCQGDemoGameAgentPlugin:
+  frame_handler: PLAY
+SerpentCQGDemoGamePlugin:
+  fps: 2
+SerpentT4AndroidGameAgentPlugin:
+  frame_handler: PLAY
+SerpentT4AndroidGamePlugin:
+  fps: 4
+SerpentT4SimGameAgentPlugin:
+  frame_handler: PLAY
+SerpentT4SimGamePlugin:
+  fps: 2
+SerpentTradingViewSimGameAgentGameAgentPlugin:
+  frame_handler: PLAY
+SerpentTradingViewSimGameAgentPlugin:
+  frame_handler: PLAY
+SerpentTradingViewSimGamePlugin:
+  fps: 2
