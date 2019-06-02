@@ -10,6 +10,8 @@ SerpentT4SimGameAgentPlugin:
   frame_handler: PLAY
 SerpentT4SimGamePlugin:
   fps: 2
+SerpentT4TF1GamePlugin:
+  fps: 2
 SerpentTradingViewSimGameAgentGameAgentPlugin:
   frame_handler: PLAY
 SerpentTradingViewSimGameAgentPlugin:

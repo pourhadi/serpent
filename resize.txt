@@ -1,0 +1,1 @@
+wmctrl -r Oracle -e 0,0,0,800,642

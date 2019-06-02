@@ -134,6 +134,21 @@
             "config": {
                 "frame_handler": "PLAY"
             }
+        },
+        "SerpentT4TF1GamePlugin": {
+            "name": "SerpentT4TF1GamePlugin",
+            "version": "0.1.0",
+            "files": [
+                {
+                    "path": "serpent_T4TF1_game.py",
+                    "pluggable": "Game"
+                }
+            ],
+            "plugins": [],
+            "libraries": [],
+            "config": {
+                "fps": 2
+            }
         }
     }
 }
