@@ -43,7 +43,7 @@ from serpent.window_controller import WindowController
 from serpent.visual_debugger.visual_debugger import VisualDebugger
 from time import sleep
 import subprocess
-
+import time
 # tf.compat.v1.enable_v2_behavior()
 
 
@@ -51,6 +51,9 @@ import subprocess
 class T4TFEnv(py_environment.PyEnvironment):
 
     def __init__(self, fake=False, metrics_key='001'):
+        with open('running', 'w') as f:
+            f.write(str(os.getpid()))
+        
         self._episode_ended = False
 
         self.game = serpent.initialize_game('T4TF1')
@@ -114,7 +117,7 @@ class T4TFEnv(py_environment.PyEnvironment):
         # self.window_id = self.window_controller.locate_window(".*S&P .*")
 
         self.keys = RedisKeys(metrics_key)
-        self.redis = redis.Redis(port=6001)
+#         self.redis = redis.Redis(port=6001)
     
         self.number_of_trades = 0
         self.number_of_wins = 0
@@ -129,6 +132,12 @@ class T4TFEnv(py_environment.PyEnvironment):
         self.get_metadata()
         
         self.active_frame = None
+        
+        self.start_time = time.time()
+        
+        self.step_read_time = 0
+        self.step_write_time = 0
+        
 
     def get_state(self, zeros=False):
         if zeros:
@@ -187,20 +196,30 @@ class T4TFEnv(py_environment.PyEnvironment):
         return ts.termination(self._state, 0)
     
     def write_order(self, order_type):
+        write_start = time.time()
         if order_type is self.previous_write: return
         with open('/home/dan/.wine/drive_c/input.txt', 'w') as f:
             f.write('%d' % (order_type))
         
+        self.step_write_time += (time.time() - write_start)
         self.previous_write = order_type
 
     def step_forward(self):
         self.write_order(3)
         
     def add_to_history(self, frame, action, reward):
+        history_start = time.time()
         im = Image.fromarray(frame)
         im.save('history/%d_%d_%f.jpg' % (int(datetime.now().timestamp() * 100), action, reward))
-        
+        print("history add time: %s seconds" % (time.time() - history_start))
+#     def log(self, string):
+#         if self.actions % 200 == 0:
+#             print(string)
+#      
     def _step(self, action):
+        self.step_read_time = 0
+        self.step_write_time = 0
+        
         if self.interrupted:
             return self.stop()
 
@@ -262,17 +281,18 @@ class T4TFEnv(py_environment.PyEnvironment):
         if self.actions > 1:
             self.add_to_history(self.active_frame, action, reward)
 
+        start_grab_frame = time.time()
         self.frame_buffer = FrameGrabber.get_frames([0])
         self.frame_buffer = self.extract_game_area(self.frame_buffer)
-
+        print("frame grab time: %s seconds" % (time.time() - start_grab_frame))
         self.active_frame = self.frame_buffer[0]
-        for i, game_frame in enumerate(self.frame_buffer):
-            if i >= 3: break
-            self.visual_debugger.store_image_data(
-                game_frame,
-                game_frame.shape,
-                str(i)
-            )
+#         for i, game_frame in enumerate(self.frame_buffer):
+#             if i >= 3: break
+#             self.visual_debugger.store_image_data(
+#                 game_frame,
+#                 game_frame.shape,
+#                 str(i)
+#             )
         print(self.frame_buffer[0].shape)    
 
 #         self.frame_history.insert(0, self.frame_buffer[0])
@@ -297,15 +317,20 @@ class T4TFEnv(py_environment.PyEnvironment):
         print('Buys: %d' % self.buys)
         print('Sells: %d' % self.sells)
         print('Holds: %d' % self.holds)
+        
+        print('Step read time: %s' % self.step_read_time)
+        print('Step write time: %s' % self.step_write_time)
         # print(states.shape)
         return ts.transition(self._states, reward=reward, discount=1.0)
 
     def read_position_and_pl(self):
+        read_start = time.time()
         result = ['','']
         while len(result[0]) < 1 or len(result[1]) < 1:
             with open('/home/dan/.wine/drive_c/output.txt', 'r') as f:
                 result = [x.strip() for x in f.read().split(',')]
         
+        self.step_read_time += (time.time() - read_start)
         return (int(result[0]), int(result[1]))
 
     def has_open_positions(self):
@@ -377,6 +402,7 @@ class T4TFEnv(py_environment.PyEnvironment):
 
 
     def get_metadata(self):
+        return
         if self.redis.exists(self.keys.trades):
             self.number_of_trades = self.redis.llen(self.keys.trades)
             
@@ -399,6 +425,7 @@ class T4TFEnv(py_environment.PyEnvironment):
             self.holds = int(self.redis.get(self.keys.holds))
 
     def push_metadata(self, action, reward, reset=False):
+        return
         if action is None:
             return
             

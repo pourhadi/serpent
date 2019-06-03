@@ -91,13 +91,13 @@ class T4Env(gym.Env):
   """Custom Environment that follows gym interface"""
   metadata = {'render.modes': ['human']}
 
-  def __init__(self):
+  def __init__(self, metrics_key='017'):
     super(T4Env, self).__init__()
     # Define action and observation space
     # They must be gym.spaces objects
     # Example when using discrete actions:
     
-    self._env = T4TFEnv(metrics_key='017')
+    self._env = T4TFEnv(metrics_key=metrics_key)
 
     self.action_space = spaces.Discrete(2)
 #     self.action_space = spaces.Box(low=-2, high=2, shape=(1,), dtype=np.int8)
