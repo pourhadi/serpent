@@ -18,6 +18,16 @@ import cv2
 import gym
 from gym import spaces
 
+EP_LENGTH = 100
+
+class ObsState:
+    def __init__(self, dir, file):
+        split = file.split('_')
+        self.file = file
+        self.action = split[1]
+        self.reward = float(split[2].strip('.jpg'))
+        self.observation = cv2.imread(os.path.join(dir, file))[:95,:]
+
 class T4HistoryEnv(gym.Env):
     metadata = {'render.modes': ['human']}
     
@@ -25,13 +35,56 @@ class T4HistoryEnv(gym.Env):
         super(T4HistoryEnv, self).__init__()
         
         self.action_space = spaces.Discrete(2)
-        
+        self.dir = dir
         self.files = os.listdir(dir)
         
         first = cv2.imread(os.path.join(dir, self.files[0]))
-        
+        first = first[:95,:]
         self.observation_space = spaces.Box(low=0, high=255, shape=first.shape, dtype=np.uint8)
         
+        self.x = 0
+        self.state = ObsState(dir, self.files[0])
+        
+        self.wins = 0
+        self.action_count = 0
+        
+        
+    def reset(self):
+        return self.state.observation
+        
+    def step(self, action):
+        
+        self.action_count += 1
+        
+        if action == self.state.action:
+            reward = self.state.reward
+        else:
+            if self.state.reward > 0:
+                reward = -1.0
+            else:
+                reward = 1.0
+        
+        self.x += 1
+        if self.x >= len(self.files):
+            self.x = 0
+        
+        self.state = ObsState(self.dir, self.files[self.x])
+        
+        if reward > 0:
+            self.wins += 1
+            
+        if self.x % 100 == 0:
+            print('---')
+            print('%d / %d - %d' % (self.wins, self.action_count, int((self.wins / self.action_count) * 100)))    
+        
+        done = False
+        if self.x % 100 == 0:
+            done = True
+        
+        return self.state.observation, reward, done, {}
+    
+    def render(self, mode='human', close=False):
+        pass
         
 
 class T4Env(gym.Env):
@@ -44,7 +97,7 @@ class T4Env(gym.Env):
     # They must be gym.spaces objects
     # Example when using discrete actions:
     
-    self._env = T4TFEnv(metrics_key='016')
+    self._env = T4TFEnv(metrics_key='017')
 
     self.action_space = spaces.Discrete(2)
 #     self.action_space = spaces.Box(low=-2, high=2, shape=(1,), dtype=np.int8)
