@@ -25,18 +25,18 @@ env = DummyVecEnv([lambda: T4Env()])
 # env = gym.make('Breakout-v0')
 # env = DummyVecEnv([lambda: env])
 
-model = PPO2('CnnPolicy', env, verbose=1, tensorboard_log="./tb_log/")
-# model = ACER.load("acer_t4")
-# model.set_env(env)
-model.learn(total_timesteps=5000, log_interval=10)
-model.save("ppo_t4")
+# model = PPO2('CnnPolicy', env, verbose=1, tensorboard_log="./tb_log/")
+model = PPO2.load("sp500_ppo2_pretrain")
+model.set_env(env)
+# model.learn(total_timesteps=5000, log_interval=10)
+# model.save("ppo_t4")
 
 # del model # remove to demonstrate saving and loading
 
 
 
-# obs = env.reset()
-# while True:
-#     action, _states = model.predict(obs)
-#     obs, rewards, dones, info = env.step(action)
-#     env.render()
+obs = env.reset()
+while True:
+    action, _states = model.predict(obs)
+    obs, rewards, dones, info = env.step(action)
+    env.render()

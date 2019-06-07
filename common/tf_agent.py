@@ -197,7 +197,7 @@ class T4TFEnv(py_environment.PyEnvironment):
     
     def write_order(self, order_type):
         write_start = time.time()
-        if order_type is self.previous_write: return
+#         if order_type is self.previous_write: return
         with open('/home/dan/.wine/drive_c/input.txt', 'w') as f:
             f.write('%d' % (order_type))
         
