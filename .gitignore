@@ -16,3 +16,10 @@ board/
 analytics/
 model/
 images/
+frames*
+frame*
+frames/
+frame_log/
+frames_dow/
+tmp/
+
