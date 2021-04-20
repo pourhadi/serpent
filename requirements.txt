@@ -3,7 +3,7 @@ aioredis==1.2.0
 astor==0.8.0
 async-timeout==3.0.1
 atari-py==0.1.15
-autobahn==19.5.1
+autobahn==20.12.3
 Click==7.0
 cloudpickle==1.1.1
 cycler==0.10.0
